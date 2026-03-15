@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador DTQ — VLI</title>
+    <link href="informativo.css" rel="stylesheet">
+    <script src="informativo.js" defer></script>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-content">
+            <h1>Relatório de Trilho Quebrado</h1>
+            <button id="theme-toggle" class="btn-theme">🌓 Alternar Tema</button>
+        </div>
+    </header>
+
+    <main class="grid">
+        <section class="card">
+            <div class="section-title">Dados do Evento</div>
+            
+            <div class="form-container">
+                <div class="row-2">
+                    <div>
+                        <label for="nivel">Aviso</label>
+                        <input id="nivel" type="text" value="*INFORMATIVO*" readonly tabindex="-1">
+                    </div>
+                    <div>
+                        <label for="titulo">Título</label>
+                        <input id="titulo" type="text" value="*Alarme de Trilho Quebrado*" readonly tabindex="-1">
+                    </div>
+                </div>
+
+                <div class="row-2">
+                    <div>
+                        <label for="local">Local</label>
+                        <input id="local" type="text" placeholder="Ex: RMT-CCS-517">
+                    </div>
+                    <div>
+                        <label for="dataHora">Data/Hora</label>
+                        <input id="dataHora" type="datetime-local">
+                    </div>
+                </div>
+
+                <div class="row-2">
+                    <div>
+                        <label for="resistencia">Resistência (mΩ)</label>
+                        <input id="resistencia" type="number" step="0.001" placeholder="Ex: 174">
+                    </div>
+                    <div>
+                        <label for="previsao">Previsão de Atendimento</label>
+                        <input id="previsao" type="text" placeholder="Ex: 15:30 ou '-'">
+                    </div>
+                </div>
+
+                <div class="full-row">
+                    <label for="situacao">Situação</label>
+                    <textarea id="situacao" placeholder="Descreva a situação detalhadamente..."></textarea>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button onclick="gerar()" class="btn-primary">⚙️ Gerar</button>
+                <button onclick="copiar()" class="btn-secondary">📋 Copiar</button>
+                <button onclick="limpar()" class="btn-secondary">🧹 Limpar</button>
+            </div>
+        </section>
+
+        <section class="card preview-card">
+            <div class="section-title">Pré-visualização (WhatsApp)</div>
+            <div id="saida" class="preview-body"></div>
+            <div id="status" class="status-msg"></div>
+        </section>
+    </main>
+
+</body>
+</html>
