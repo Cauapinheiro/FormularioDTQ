@@ -143,3 +143,12 @@ button:not(.btn-theme) {
 }
 
 .status-msg { font-size: 0.7rem; color: var(--text-muted); margin-top: 1rem; text-align: center; }
+
+.full-row label input[type="radio"] {
+    margin-right: 6px;
+}
+
+.full-row label {
+    display: block;
+    margin-bottom: 5px;
+}
