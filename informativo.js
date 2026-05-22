@@ -88,12 +88,7 @@ function gerarCCM() {
 
     const dataHora = document.getElementById('dataHoraCCM').value;
 
-    let dataFmt = '-';
-    if (dataHora) {
-        const d = new Date(dataHora);
-        dataFmt = d.toLocaleDateString('pt-BR') + ' ' +
-            d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-    }
+   const dataFmt = document.getElementById('dataHoraCCM').value || '-';
 
     const zona = document.querySelector('input[name="zonaQuente"]:checked');
     const zonaQuente = zona ? zona.value : '-';
@@ -102,26 +97,29 @@ function gerarCCM() {
     const corredor = corSel ? corSel.value : '-';
 
     const texto = [
-        '🚨 *ALERTA CCM*',
-        '',
-        `🔧 *Tipo:* ${tipo}`,
-        `🏷️ *TAG:* ${tag}`,
-        `📦 *Ativo:* ${ativo}`,
-        '',
-        `⚠️ *Falha:* ${falha}`,
-        '',
-        `🚆 *Trem:* ${trem}`,
-        `📍 *Trecho:* ${trecho}`,
-        `🗺️ *Corredor:* ${corredor}`,
-        '',
-        `🔥 *Zona quente:* ${zonaQuente}`,
-        '',
-        `⏱️ *Data/Hora:* ${dataFmt}`,
-        '',
-        `📊 *Status:* ${status}`
-    ].join('\n');
+    '🚨 *ALERTA CCM*',
+    '',
+    `🔧 *Tipo:* ${tipo}`,
+    `🏷️ *TAG:* ${tag}`,
+    `📦 *Ativo:* ${ativo}`,
+    '',
+    `⚠️ *Falha:* ${falha}`,
+    '',
+    `🚆 *Trem:* ${trem}`,
+    `📍 *Trecho:* ${trecho}`,
+    '',
+    `🔥 *Zona quente:* ${zonaQuente}`,
+    '',
+    `⏱️ *Data/Hora:* ${dataFmt}`,
+    '',
+    `📊 *Status:* ${status}`,
+    '',
+    `🗺️ *Corredor:* ${corredor}`
+].join('\n');
+``
 
     document.getElementById('saida').textContent = texto;
     document.getElementById('status').textContent =
         `Atualizado às ${new Date().toLocaleTimeString()}`;
 }
+
