@@ -60,3 +60,68 @@ function limpar() {
     });
     document.getElementById('saida').textContent = '';
 }
+
+// troca de abas
+function trocarAba(aba) {
+    document.getElementById('aba-dtq').style.display = 'none';
+    document.getElementById('aba-ccm').style.display = 'none';
+
+    if (aba === 'dtq') {
+        document.getElementById('aba-dtq').style.display = 'block';
+    } else {
+        document.getElementById('aba-ccm').style.display = 'block';
+    }
+
+    document.getElementById('saida').textContent = '';
+}
+``
+
+function gerarCCM() {
+
+    const tipo = document.getElementById('tipoEquipamento').value || '-';
+    const tag = document.getElementById('tag').value || '-';
+    const ativo = document.getElementById('descricaoAtivo').value || '-';
+    const falha = document.getElementById('falha').value || '-';
+    const trem = document.getElementById('trem').value || '-';
+    const trecho = document.getElementById('trecho').value || '-';
+    const status = document.getElementById('statusAtual').value || '-';
+
+    const dataHora = document.getElementById('dataHoraCCM').value;
+
+    let dataFmt = '-';
+    if (dataHora) {
+        const d = new Date(dataHora);
+        dataFmt = d.toLocaleDateString('pt-BR') + ' ' +
+            d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    const zona = document.querySelector('input[name="zonaQuente"]:checked');
+    const zonaQuente = zona ? zona.value : '-';
+
+    const corSel = document.querySelector('input[name="corredor"]:checked');
+    const corredor = corSel ? corSel.value : '-';
+
+    const texto = [
+        '🚨 *ALERTA CCM*',
+        '',
+        `🔧 *Tipo:* ${tipo}`,
+        `🏷️ *TAG:* ${tag}`,
+        `📦 *Ativo:* ${ativo}`,
+        '',
+        `⚠️ *Falha:* ${falha}`,
+        '',
+        `🚆 *Trem:* ${trem}`,
+        `📍 *Trecho:* ${trecho}`,
+        `🗺️ *Corredor:* ${corredor}`,
+        '',
+        `🔥 *Zona quente:* ${zonaQuente}`,
+        '',
+        `⏱️ *Data/Hora:* ${dataFmt}`,
+        '',
+        `📊 *Status:* ${status}`
+    ].join('\n');
+
+    document.getElementById('saida').textContent = texto;
+    document.getElementById('status').textContent =
+        `Atualizado às ${new Date().toLocaleTimeString()}`;
+}
