@@ -78,64 +78,73 @@
 
         <div class="form-container">
 
-            <div class="row-2">
-                <div>
-                    <label>Tipo de Equipamento</label>
-                    <input id="tipoEquipamento">
-                </div>
-                <div>
-                    <label>TAG</label>
-                    <input id="tag">
-                </div>
-            </div>
-
-            <div class="full-row">
-                <label>Descrição do Ativo</label>
-                <input id="descricaoAtivo">
-            </div>
-
-            <div class="full-row">
-                <label>Descrição da Falha</label>
-                <textarea id="falha"></textarea>
-            </div>
-
-            <div class="row-2">
-                <div>
-                    <label>Trem</label>
-                    <input id="trem">
-                </div>
-                <div>
-                    <label>Data/Hora</label>
-                    <input id="dataHoraCCM" type="datetime-local">
-                </div>
-            </div>
-
-            <div class="full-row">
-                <label>Trecho</label>
-                <input id="trecho">
-            </div>
-
-            <div class="full-row">
-                <label>Zona Quente</label>
-                <label><input type="radio" name="zonaQuente" value="SIM"> SIM</label>
-                <label><input type="radio" name="zonaQuente" value="NÃO"> NÃO</label>
-            </div>
-
-            <div class="full-row">
-                <label>Status Atual</label>
-                <input id="statusAtual">
-            </div>
-
-            <div class="full-row">
-                <label>Corredor</label>
-                <label><input type="radio" name="corredor" value="CENTRO-LESTE"> CENTRO-LESTE</label>
-                <label><input type="radio" name="corredor" value="CENTRO-NORTE"> CENTRO-NORTE</label>
-                <label><input type="radio" name="corredor" value="CENTRO-SUDESTE"> CENTRO-SUDESTE</label>
-                <label><input type="radio" name="corredor" value="MINAS-BAHIA"> MINAS-BAHIA</label>
-                <label><input type="radio" name="corredor" value="MINAS-RIO"> MINAS-RIO</label>
-            </div>
-
+    <!-- Linha 1 -->
+    <div class="row-2">
+        <div>
+            <label>Tipo de Equipamento</label>
+            <input id="tipoEquipamento">
         </div>
+        <div>
+            <label>TAG</label>
+            <input id="tag">
+        </div>
+    </div>
+
+    <!-- Linha 2 -->
+    <div class="row-2">
+        <div>
+            <label>Trem</label>
+            <input id="trem">
+        </div>
+        <div>
+            <label>Data/Hora</label>
+            <input id="dataHoraCCM" type="text" placeholder="Ex: 22/05/2026 09:15">
+        </div>
+    </div>
+
+    <!-- Linha 3 -->
+    <div class="row-2">
+        <div>
+            <label>Trecho</label>
+            <input id="trecho">
+        </div>
+        <div>
+            <label>Status Atual</label>
+            <input id="statusAtual">
+        </div>
+    </div>
+
+    <!-- Linha 4 -->
+    <div class="full-row">
+        <label>Zona Quente</label>
+        <label><input type="radio" name="zonaQuente" value="SIM"> SIM</label>
+        <label><input type="radio" name="zonaQuente" value="NÃO"> NÃO</label>
+    </div>
+
+    <!-- Linha 5 -->
+    <div class="full-row">
+        <label>Descrição do Ativo</label>
+        <input id="descricaoAtivo">
+    </div>
+
+    <!-- Linha 6 -->
+    <div class="full-row">
+        <label>Descrição da Falha</label>
+        <textarea id="falha"></textarea>
+    </div>
+
+    
+    <div class="full-row">
+        <label>Corredor</label>
+        <label><input type="radio" name="corredor" value="CENTRO-LESTE"> CENTRO-LESTE</label>
+        <label><input type="radio" name="corredor" value="CENTRO-NORTE"> CENTRO-NORTE</label>
+        <label><input type="radio" name="corredor" value="CENTRO-SUDESTE"> CENTRO-SUDESTE</label>
+        <label><input type="radio" name="corredor" value="MINAS-BAHIA"> MINAS-BAHIA</label>
+        <label><input type="radio" name="corredor" value="MINAS-RIO"> MINAS-RIO</label>
+    </div>
+
+</div>
+
 
         <div class="actions">
             <button onclick="gerarCCM()" class="btn-primary">Gerar</button>
