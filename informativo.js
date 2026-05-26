@@ -46,9 +46,9 @@ function gerar() {
 
 async function copiar() {
     const texto = document.getElementById('saida').textContent;
-    if (!texto) { gerar(); return; }
+    if (!texto) return;
     await navigator.clipboard.writeText(texto);
-    
+
     const status = document.getElementById('status');
     status.textContent = "✅ Texto copiado!";
     setTimeout(() => { status.textContent = ""; }, 2000);
@@ -66,29 +66,31 @@ function trocarAba(aba) {
     document.getElementById('aba-dtq').style.display = 'none';
     document.getElementById('aba-ccm').style.display = 'none';
 
+    document.getElementById('tab-dtq').classList.remove('active');
+    document.getElementById('tab-ccm').classList.remove('active');
+
     if (aba === 'dtq') {
         document.getElementById('aba-dtq').style.display = 'block';
+        document.getElementById('tab-dtq').classList.add('active');
     } else {
         document.getElementById('aba-ccm').style.display = 'block';
+        document.getElementById('tab-ccm').classList.add('active');
     }
 
     document.getElementById('saida').textContent = '';
 }
-``
 
 function gerarCCM() {
 
     const tipo = document.getElementById('tipoEquipamento').value || '-';
     const tag = document.getElementById('tag').value || '-';
     const ativo = document.getElementById('descricaoAtivo').value || '-';
-    const falha = document.getElementById('falha').value || '-';
+    const falha = document.getElementById('relatoFalha').value || '-';
     const trem = document.getElementById('trem').value || '-';
     const trecho = document.getElementById('trecho').value || '-';
     const status = document.getElementById('statusAtual').value || '-';
 
-    const dataHora = document.getElementById('dataHoraCCM').value;
-
-   const dataFmt = document.getElementById('dataHoraCCM').value || '-';
+    const dataFmt = document.getElementById('dataHoraCCM').value || '-';
 
     const zona = document.querySelector('input[name="zonaQuente"]:checked');
     const zonaQuente = zona ? zona.value : '-';
@@ -111,10 +113,8 @@ function gerarCCM() {
     `📊 *STATUS ATUAL:* ${status}`,
     `🗺️ *Corredor:* ${corredor}`
 ].join('\n');
-``
 
     document.getElementById('saida').textContent = texto;
     document.getElementById('status').textContent =
         `Atualizado às ${new Date().toLocaleTimeString()}`;
 }
-
