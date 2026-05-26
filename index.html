@@ -18,9 +18,9 @@
 </header>
 
 <!-- ABAS -->
-<div style="display:flex; gap:10px; padding:10px 20px;">
-    <button class="btn-primary" onclick="trocarAba('dtq')">Trilho Quebrado</button>
-    <button class="btn-secondary" onclick="trocarAba('ccm')">Alerta CCM</button>
+<div class="tab-bar">
+    <button class="tab-btn active" id="tab-dtq" onclick="trocarAba('dtq')">🚧 Trilho Quebrado</button>
+    <button class="tab-btn" id="tab-ccm" onclick="trocarAba('ccm')">🚨 Alerta CCM</button>
 </div>
 
 <main class="grid">
@@ -115,7 +115,7 @@
         </div>
         <div>
             <label>Relato da falha:</label>
-            <input id="statusAtual">
+            <input id="relatoFalha">
         </div>
     </div>
 
@@ -132,7 +132,7 @@
     <!-- Linha 6 -->
     <div class="full-row">
         <label>Status atual</label>
-        <textarea id="falha"></textarea>
+        <textarea id="statusAtual"></textarea>
     </div>
 
     
