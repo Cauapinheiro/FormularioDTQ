@@ -62,19 +62,25 @@ function limpar() {
 }
 
 // troca de abas
+// troca de abas atualizada
 function trocarAba(aba) {
     document.getElementById('aba-dtq').style.display = 'none';
     document.getElementById('aba-ccm').style.display = 'none';
+    document.getElementById('aba-pt').style.display = 'none';
 
     document.getElementById('tab-dtq').classList.remove('active');
     document.getElementById('tab-ccm').classList.remove('active');
+    document.getElementById('tab-pt').classList.remove('active');
 
     if (aba === 'dtq') {
         document.getElementById('aba-dtq').style.display = 'block';
         document.getElementById('tab-dtq').classList.add('active');
-    } else {
+    } else if (aba === 'ccm') {
         document.getElementById('aba-ccm').style.display = 'block';
         document.getElementById('tab-ccm').classList.add('active');
+    } else if (aba === 'pt') {
+        document.getElementById('aba-pt').style.display = 'block';
+        document.getElementById('tab-pt').classList.add('active');
     }
 
     document.getElementById('saida').textContent = '';
@@ -117,4 +123,81 @@ function gerarCCM() {
     document.getElementById('saida').textContent = texto;
     document.getElementById('status').textContent =
         `Atualizado às ${new Date().toLocaleTimeString()}`;
+}
+
+
+// Gerador Passagem de Turno
+function gerarPT() {
+    // Helper para capturar radio buttons
+    const getRadio = (name) => {
+        const el = document.querySelector(`input[name="${name}"]:checked`);
+        return el ? el.value : 'Não informado';
+    };
+
+    const plantonista = document.getElementById('pt-plantonista').value || '-';
+    const turno = getRadio('pt-turno');
+    
+    const safTratou = getRadio('pt-saf');
+    const safPend = document.getElementById('pt-saf-pend').value || 'SEM PENDÊNCIAS';
+    
+    const mdwTratou = getRadio('pt-mdw');
+    const mdwPend = document.getElementById('pt-mdw-pend').value || '-';
+    
+    const dtqTratou = getRadio('pt-dtq');
+    const dtqPend = document.getElementById('pt-dtq-pend').value || 'NÃO TEVE';
+    
+    const telTratou = getRadio('pt-telecom');
+    const telUltimo = document.getElementById('pt-telecom-ultimo').value || '-';
+    const telPend = document.getElementById('pt-telecom-pend').value || 'SEM PENDÊNCIAS';
+
+    const acionamentos = document.getElementById('pt-acionamentos').value || '-';
+    const acionamentosAnd = document.getElementById('pt-acionamentos-andamento').value || '-';
+    
+    const atencao = document.getElementById('pt-atencao').value || '-';
+
+    const notSaf = getRadio('pt-not-saf');
+    const notWpp = getRadio('pt-not-wpp');
+    const notEletro = getRadio('pt-not-eletro');
+    const tagEletro = document.getElementById('pt-tag-eletro').value || '-';
+
+    const texto = [
+        `📋 *PASSAGEM DE TURNO CCM*`,
+        ``,
+        `👤 *Dados do Plantonista*`,
+        `*Plantonista:* ${plantonista}`,
+        `*Turno:* ${turno}`,
+        ``,
+        `📊 *Registros do SAF*`,
+        `Tratou todos? ${safTratou}`,
+        `Pendências: ${safPend}`,
+        ``,
+        `📡 *Alarmes de Disponibilidade MDW*`,
+        `Tratou todos? ${mdwTratou}`,
+        `Pendências / Último: ${mdwPend}`,
+        ``,
+        `🚧 *Alarmes DTQ e DDC*`,
+        `Tratados? ${dtqTratou}`,
+        `Pendências / Último: ${dtqPend}`,
+        ``,
+        `📞 *Alarmes Telecom*`,
+        `Tratados? ${telTratou}`,
+        `Último alarme (>1h): ${telUltimo}`,
+        `Pendências: ${telPend}`,
+        ``,
+        `🔧 *Acionamentos e Atividades*`,
+        `Realizados: ${acionamentos}`,
+        `Em andamento: ${acionamentosAnd}`,
+        ``,
+        `⚠️ *Pontos de Atenção / Instruções*`,
+        `${atencao}`,
+        ``,
+        `✅ *Notificações*`,
+        `E-mail SAF enviadas? ${notSaf}`,
+        `WhatsApp enviadas? ${notWpp}`,
+        `App Eletro encerrados? ${notEletro}`,
+        `Tag último encerramento: ${tagEletro}`
+    ].join('\n');
+
+    document.getElementById('saida').textContent = texto;
+    document.getElementById('status').textContent = `Atualizado às ${new Date().toLocaleTimeString()}`;
 }
