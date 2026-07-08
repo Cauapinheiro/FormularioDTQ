@@ -21,7 +21,7 @@
 <div class="tab-bar">
     <button class="tab-btn active" id="tab-dtq" onclick="trocarAba('dtq')">🚧 Trilho Quebrado</button>
     <button class="tab-btn" id="tab-ccm" onclick="trocarAba('ccm')">🚨 Alerta CCM</button>
-    <button class="tab-btn" id="tab-pt" onclick="trocarAba('pt')">📋 Passagem de Turno</button>
+    <button class="tab-btn" id="tab-info" onclick="trocarAba('info')">📢 Informativo</button>
 </div>
 
 <main class="grid">
@@ -156,125 +156,111 @@
 
     </section>
 
-    <section id="aba-pt" class="card" style="display:none;">
-        <div class="section-title">Passagem de Turno CCM</div>
+    <!-- ✅ ABA 3 - INFORMATIVO (Informativo / Atualização / Encerramento) -->
+    <section id="aba-info" class="card" style="display:none;">
+        <div class="section-title">Informativo de Ocorrência</div>
 
-        <div class="form-container" style="max-height: 55vh; overflow-y: auto; padding-right: 8px;">
-            
-            <div class="row-2">
-                <div class="full-row">
-                    <label>Plantonista</label>
-                    <input id="pt-plantonista" type="text" value="Gledson Cauã Pinheiro Leão">
-                </div>
-                <div class="full-row">
-                    <label>Turno</label>
-                    <label><input type="radio" name="pt-turno" value="MANHÃ"> MANHÃ</label>
-                    <label><input type="radio" name="pt-turno" value="TARDE"> TARDE</label>
-                    <label><input type="radio" name="pt-turno" value="NOTURNO"> NOTURNO</label>
-                </div>
+        <div class="form-container">
+
+            <div class="full-row">
+                <label>Local (entra entre parênteses no título)</label>
+                <input id="info-local" type="text" placeholder="Ex: ZNI, ZZB, ZCB, EBH...">
+            </div>
+
+            <div class="full-row">
+                <label>Estágio</label>
+                <label><input type="radio" name="info-estagio" value="informativo" checked onchange="trocarEstagioInfo('informativo')"> Informativo</label>
+                <label><input type="radio" name="info-estagio" value="atualizacao" onchange="trocarEstagioInfo('atualizacao')"> Atualização</label>
+                <label><input type="radio" name="info-estagio" value="encerramento" onchange="trocarEstagioInfo('encerramento')"> Encerramento</label>
             </div>
 
             <hr style="border: 0; border-top: 1px solid var(--border); width: 100%; margin: 5px 0;">
 
-            <div class="row-2">
-                <div class="full-row">
-                    <label>Tratou todos os registos SAF?</label>
-                    <label><input type="radio" name="pt-saf" value="Sim"> Sim</label>
-                    <label><input type="radio" name="pt-saf" value="Não"> Não</label>
+            <!-- Campos: INFORMATIVO -->
+            <div id="info-bloco-informativo">
+                <div class="row-2">
+                    <div>
+                        <label>Ativo</label>
+                        <input id="info-ativo" type="text">
+                    </div>
+                    <div>
+                        <label>Horário</label>
+                        <input id="info-horario" type="text" placeholder="Ex: 14:35">
+                    </div>
                 </div>
                 <div class="full-row">
-                    <label>Registos pendentes:</label>
-                    <input id="pt-saf-pend" type="text" placeholder="Ex: SEM PENDÊNCIAS">
-                </div>
-            </div>
-
-            <div class="row-2">
-                <div class="full-row">
-                    <label>Tratou os alarmes MDW?</label>
-                    <label><input type="radio" name="pt-mdw" value="Sim"> Sim</label>
-                    <label><input type="radio" name="pt-mdw" value="Não"> Não</label>
+                    <label>Descrição da falha</label>
+                    <textarea id="info-descricao"></textarea>
                 </div>
                 <div class="full-row">
-                    <label>Pendentes ou último tratado:</label>
-                    <input id="pt-mdw-pend" type="text" placeholder="-">
-                </div>
-            </div>
-
-            <div class="row-2">
-                <div class="full-row">
-                    <label>Alarmes DTQ e DDC tratados?</label>
-                    <label><input type="radio" name="pt-dtq" value="Sim"> Sim</label>
-                    <label><input type="radio" name="pt-dtq" value="Não"> Não</label>
+                    <label>Impacto</label>
+                    <input id="info-impacto" type="text">
                 </div>
                 <div class="full-row">
-                    <label>Pendentes ou último tratado:</label>
-                    <input id="pt-dtq-pend" type="text" placeholder="Ex: NÃO TEVE">
+                    <label>Acionamentos realizados</label>
+                    <input id="info-acionamentos" type="text">
+                </div>
+                <div class="full-row">
+                    <label>Previsão de atendimento</label>
+                    <input id="info-previsao" type="text">
                 </div>
             </div>
 
-            <div class="full-row">
-                <label>Alarmes Telecom tratados?</label>
-                <label><input type="radio" name="pt-telecom" value="Sim"> Sim</label>
-                <label><input type="radio" name="pt-telecom" value="Não"> Não</label>
-            </div>
-            <div class="row-2">
-                <div class="full-row">
-                    <label>Último alarme (>1h) tratado:</label>
-                    <input id="pt-telecom-ultimo" type="text" placeholder="Ex: Firewall_Link...">
+            <!-- Campos: ATUALIZAÇÃO -->
+            <div id="info-bloco-atualizacao" style="display:none;">
+                <div class="row-2">
+                    <div>
+                        <label>Nº da atualização</label>
+                        <input id="info-num-atualizacao" type="number" min="1" value="1">
+                    </div>
+                    <div>
+                        <button type="button" class="btn-secondary" onclick="reiniciarNumeracaoInfo()">🔄 Reiniciar numeração (nova ocorrência)</button>
+                    </div>
+                </div>
+                <div class="row-2">
+                    <div>
+                        <label>Horário que o técnico chegou no local</label>
+                        <input id="info-tec-horario" type="text" placeholder="Ex: 15:10">
+                    </div>
+                    <div>
+                        <label>Técnico realizando atendimento</label>
+                        <input id="info-tecnico" type="text">
+                    </div>
                 </div>
                 <div class="full-row">
-                    <label>Quais eventos pendentes:</label>
-                    <input id="pt-telecom-pend" type="text" placeholder="Ex: SEM PENDÊNCIAS">
-                </div>
-            </div>
-
-            <hr style="border: 0; border-top: 1px solid var(--border); width: 100%; margin: 5px 0;">
-
-            <div class="full-row">
-                <label>Acionamento realizado? Se sim, quais?</label>
-                <input id="pt-acionamentos" type="text" placeholder="-">
-            </div>
-            <div class="full-row">
-                <label>Acionamentos ou atividades em andamento?</label>
-                <textarea id="pt-acionamentos-andamento" placeholder="- Termómetros: ETM - Sem comunicar" style="min-height: 80px;"></textarea>
-            </div>
-
-            <div class="full-row">
-                <label>Pontos de Atenção / Instruções (novas):</label>
-                <textarea id="pt-atencao" style="min-height: 120px;"></textarea>
-            </div>
-
-            <hr style="border: 0; border-top: 1px solid var(--border); width: 100%; margin: 5px 0;">
-
-            <div class="row-2">
-                <div class="full-row">
-                    <label>Notificações E-mail SAF?</label>
-                    <label><input type="radio" name="pt-not-saf" value="Sim"> Sim</label>
-                    <label><input type="radio" name="pt-not-saf" value="Não"> Não</label>
+                    <label>Ação realizada até o momento</label>
+                    <textarea id="info-acao"></textarea>
                 </div>
                 <div class="full-row">
-                    <label>Notificações WhatsApp?</label>
-                    <label><input type="radio" name="pt-not-wpp" value="Sim"> Sim</label>
-                    <label><input type="radio" name="pt-not-wpp" value="Não"> Não</label>
+                    <label>Previsão de normalização</label>
+                    <input id="info-previsao-normalizacao" type="text">
                 </div>
             </div>
 
-            <div class="row-2">
+            <!-- Campos: ENCERRAMENTO -->
+            <div id="info-bloco-encerramento" style="display:none;">
                 <div class="full-row">
-                    <label>App Eletro encerrados?</label>
-                    <label><input type="radio" name="pt-not-eletro" value="Sim"> Sim</label>
-                    <label><input type="radio" name="pt-not-eletro" value="Não"> Não</label>
+                    <label>Diagnóstico</label>
+                    <textarea id="info-diagnostico"></textarea>
                 </div>
                 <div class="full-row">
-                    <label>Tag do último encerramento:</label>
-                    <input id="pt-tag-eletro" type="text" placeholder="-">
+                    <label>Atividade executada</label>
+                    <textarea id="info-atividade"></textarea>
+                </div>
+                <div class="full-row">
+                    <label>Impacto</label>
+                    <input id="info-impacto-enc" type="text">
+                </div>
+                <div class="full-row">
+                    <label>Finalização do evento</label>
+                    <input id="info-finalizacao" type="text" placeholder="Ex: Evento normalizado às 16:20">
                 </div>
             </div>
 
         </div>
 
         <div class="actions">
-            <button onclick="gerarPT()" class="btn-primary">Gerar Relatório</button>
+            <button onclick="gerarInformativo()" class="btn-primary">Gerar</button>
             <button onclick="copiar()" class="btn-secondary">Copiar</button>
         </div>
     </section>
