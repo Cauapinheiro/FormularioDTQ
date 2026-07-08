@@ -106,6 +106,7 @@ function gerarCCM() {
 
     const texto = [
     '🚨 *ALERTA CCM*',
+    `🔥 *ZONA QUENTE:* ${zonaQuente}`,
     '',
     `🔧 *TIPO DE EQUIPAMENTO:* ${tipo}`,
     `🏷️ *TAG:* ${tag}`,
@@ -113,7 +114,6 @@ function gerarCCM() {
     `⚠️ *RELATO DA FALHA:* ${falha}`,
     `📍 *TRECHO:* ${trecho}`,
     `🚆 *TREM:* ${trem}`,
-    `🔥 *ZONA QUENTE:* ${zonaQuente}`,
     `⏱️ *DATA/HORA:* ${dataFmt}`,
     '',
     `📊 *STATUS ATUAL:* ${status}`,
