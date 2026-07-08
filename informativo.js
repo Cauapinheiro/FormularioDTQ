@@ -66,11 +66,11 @@ function limpar() {
 function trocarAba(aba) {
     document.getElementById('aba-dtq').style.display = 'none';
     document.getElementById('aba-ccm').style.display = 'none';
-    document.getElementById('aba-pt').style.display = 'none';
+    document.getElementById('aba-info').style.display = 'none';
 
     document.getElementById('tab-dtq').classList.remove('active');
     document.getElementById('tab-ccm').classList.remove('active');
-    document.getElementById('tab-pt').classList.remove('active');
+    document.getElementById('tab-info').classList.remove('active');
 
     if (aba === 'dtq') {
         document.getElementById('aba-dtq').style.display = 'block';
@@ -78,12 +78,31 @@ function trocarAba(aba) {
     } else if (aba === 'ccm') {
         document.getElementById('aba-ccm').style.display = 'block';
         document.getElementById('tab-ccm').classList.add('active');
-    } else if (aba === 'pt') {
-        document.getElementById('aba-pt').style.display = 'block';
-        document.getElementById('tab-pt').classList.add('active');
+    } else if (aba === 'info') {
+        document.getElementById('aba-info').style.display = 'block';
+        document.getElementById('tab-info').classList.add('active');
     }
 
     document.getElementById('saida').textContent = '';
+}
+
+// troca de estágio dentro da aba Informativo
+function trocarEstagioInfo(estagio) {
+    document.getElementById('info-bloco-informativo').style.display = 'none';
+    document.getElementById('info-bloco-atualizacao').style.display = 'none';
+    document.getElementById('info-bloco-encerramento').style.display = 'none';
+
+    if (estagio === 'informativo') {
+        document.getElementById('info-bloco-informativo').style.display = 'block';
+    } else if (estagio === 'atualizacao') {
+        document.getElementById('info-bloco-atualizacao').style.display = 'block';
+    } else if (estagio === 'encerramento') {
+        document.getElementById('info-bloco-encerramento').style.display = 'block';
+    }
+}
+
+function reiniciarNumeracaoInfo() {
+    document.getElementById('info-num-atualizacao').value = 1;
 }
 
 function gerarCCM() {
@@ -126,77 +145,71 @@ function gerarCCM() {
 }
 
 
-// Gerador Passagem de Turno
-function gerarPT() {
-    // Helper para capturar radio buttons
-    const getRadio = (name) => {
-        const el = document.querySelector(`input[name="${name}"]:checked`);
-        return el ? el.value : 'Não informado';
-    };
+// Gerador Informativo (Informativo / Atualização / Encerramento)
+function ordinalFeminino(n) {
+    return `${n}ª`;
+}
 
-    const plantonista = document.getElementById('pt-plantonista').value || '-';
-    const turno = getRadio('pt-turno');
-    
-    const safTratou = getRadio('pt-saf');
-    const safPend = document.getElementById('pt-saf-pend').value || 'SEM PENDÊNCIAS';
-    
-    const mdwTratou = getRadio('pt-mdw');
-    const mdwPend = document.getElementById('pt-mdw-pend').value || '-';
-    
-    const dtqTratou = getRadio('pt-dtq');
-    const dtqPend = document.getElementById('pt-dtq-pend').value || 'NÃO TEVE';
-    
-    const telTratou = getRadio('pt-telecom');
-    const telUltimo = document.getElementById('pt-telecom-ultimo').value || '-';
-    const telPend = document.getElementById('pt-telecom-pend').value || 'SEM PENDÊNCIAS';
+function gerarInformativo() {
+    const local = document.getElementById('info-local').value || '-';
+    const estagio = document.querySelector('input[name="info-estagio"]:checked').value;
 
-    const acionamentos = document.getElementById('pt-acionamentos').value || '-';
-    const acionamentosAnd = document.getElementById('pt-acionamentos-andamento').value || '-';
-    
-    const atencao = document.getElementById('pt-atencao').value || '-';
+    let texto = '';
 
-    const notSaf = getRadio('pt-not-saf');
-    const notWpp = getRadio('pt-not-wpp');
-    const notEletro = getRadio('pt-not-eletro');
-    const tagEletro = document.getElementById('pt-tag-eletro').value || '-';
+    if (estagio === 'informativo') {
+        const ativo = document.getElementById('info-ativo').value || '-';
+        const descricao = document.getElementById('info-descricao').value || '-';
+        const horario = document.getElementById('info-horario').value || '-';
+        const impacto = document.getElementById('info-impacto').value || '-';
+        const acionamentos = document.getElementById('info-acionamentos').value || '-';
+        const previsao = document.getElementById('info-previsao').value || '-';
 
-    const texto = [
-        `📋 *PASSAGEM DE TURNO CCM*`,
-        ``,
-        `👤 *Dados do Plantonista*`,
-        `*Plantonista:* ${plantonista}`,
-        `*Turno:* ${turno}`,
-        ``,
-        `📊 *Registros do SAF*`,
-        `Tratou todos? ${safTratou}`,
-        `Pendências: ${safPend}`,
-        ``,
-        `📡 *Alarmes de Disponibilidade MDW*`,
-        `Tratou todos? ${mdwTratou}`,
-        `Pendências / Último: ${mdwPend}`,
-        ``,
-        `🚧 *Alarmes DTQ e DDC*`,
-        `Tratados? ${dtqTratou}`,
-        `Pendências / Último: ${dtqPend}`,
-        ``,
-        `📞 *Alarmes Telecom*`,
-        `Tratados? ${telTratou}`,
-        `Último alarme (>1h): ${telUltimo}`,
-        `Pendências: ${telPend}`,
-        ``,
-        `🔧 *Acionamentos e Atividades*`,
-        `Realizados: ${acionamentos}`,
-        `Em andamento: ${acionamentosAnd}`,
-        ``,
-        `⚠️ *Pontos de Atenção / Instruções*`,
-        `${atencao}`,
-        ``,
-        `✅ *Notificações*`,
-        `E-mail SAF enviadas? ${notSaf}`,
-        `WhatsApp enviadas? ${notWpp}`,
-        `App Eletro encerrados? ${notEletro}`,
-        `Tag último encerramento: ${tagEletro}`
-    ].join('\n');
+        texto = [
+            `⚠️ INFORMATIVO (${local}) ⚠️`,
+            ``,
+            `Ativo: ${ativo}`,
+            `Descrição da falha: ${descricao}`,
+            `Horário: ${horario}`,
+            `Impacto: ${impacto}`,
+            `Acionamentos realizados: ${acionamentos}`,
+            `Previsão de atendimento: ${previsao}`
+        ].join('\n');
+
+    } else if (estagio === 'atualizacao') {
+        const numInput = document.getElementById('info-num-atualizacao');
+        const numero = parseInt(numInput.value, 10) || 1;
+        const tecHorario = document.getElementById('info-tec-horario').value || '-';
+        const tecnico = document.getElementById('info-tecnico').value || '-';
+        const acao = document.getElementById('info-acao').value || '-';
+        const previsaoNorm = document.getElementById('info-previsao-normalizacao').value || '-';
+
+        texto = [
+            `⚠️ ${ordinalFeminino(numero)} ATUALIZAÇÃO (${local}) ⚠️`,
+            ``,
+            `Horário que o técnico chegou no local: ${tecHorario}`,
+            `Técnico realizando atendimento: ${tecnico}`,
+            `Ação realizada até o momento: ${acao}`,
+            `Previsão de normalização: ${previsaoNorm}`
+        ].join('\n');
+
+        // Auto-incrementa para a próxima atualização
+        numInput.value = numero + 1;
+
+    } else if (estagio === 'encerramento') {
+        const diagnostico = document.getElementById('info-diagnostico').value || '-';
+        const atividade = document.getElementById('info-atividade').value || '-';
+        const impacto = document.getElementById('info-impacto-enc').value || '-';
+        const finalizacao = document.getElementById('info-finalizacao').value || '-';
+
+        texto = [
+            `✅ ENCERRAMENTO DO EVENTO (${local}) ✅`,
+            ``,
+            `Diagnóstico: ${diagnostico}`,
+            `Atividade executada: ${atividade}`,
+            `Impacto: ${impacto}`,
+            `Finalização do evento: ${finalizacao}`
+        ].join('\n');
+    }
 
     document.getElementById('saida').textContent = texto;
     document.getElementById('status').textContent = `Atualizado às ${new Date().toLocaleTimeString()}`;
