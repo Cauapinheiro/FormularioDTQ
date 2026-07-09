@@ -17,6 +17,25 @@ window.onload = () => {
     input.value = now.toISOString().slice(0, 16);
 };
 
+// Exibe o texto gerado no balão estilo WhatsApp + timestamp
+function mostrarPreview(texto) {
+    document.getElementById('saida').textContent = texto;
+    document.getElementById('wa-empty').style.display = 'none';
+    document.getElementById('wa-bubble').style.display = 'block';
+
+    const now = new Date();
+    document.getElementById('wa-time').textContent =
+        now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    document.getElementById('status').textContent = `Atualizado às ${now.toLocaleTimeString()}`;
+}
+
+function limparPreview() {
+    document.getElementById('saida').textContent = '';
+    document.getElementById('wa-bubble').style.display = 'none';
+    document.getElementById('wa-empty').style.display = 'block';
+    document.getElementById('status').textContent = '';
+}
+
 function gerar() {
     const titulo = document.getElementById('titulo').value;
     const local = document.getElementById('local').value || '-';
@@ -40,8 +59,7 @@ function gerar() {
         `✅ *Previsão de Atendimento:* ${previsao}`
     ].join('\n');
 
-    document.getElementById('saida').textContent = texto;
-    document.getElementById('status').textContent = `Atualizado às ${new Date().toLocaleTimeString()}`;
+    mostrarPreview(texto);
 }
 
 async function copiar() {
@@ -54,11 +72,31 @@ async function copiar() {
     setTimeout(() => { status.textContent = ""; }, 2000);
 }
 
-function limpar() {
-    ['local', 'resistencia', 'situacao', 'previsao'].forEach(id => {
-        document.getElementById(id).value = '';
+// Limpa todos os campos da aba informada e reseta o preview
+function limparFormulario(secaoId) {
+    const secao = document.getElementById(secaoId);
+
+    secao.querySelectorAll('input[type="text"], input[type="number"], input[type="datetime-local"], textarea').forEach(el => {
+        el.value = '';
     });
-    document.getElementById('saida').textContent = '';
+    secao.querySelectorAll('input[type="radio"]').forEach(el => {
+        el.checked = false;
+    });
+
+    if (secaoId === 'aba-dtq') {
+        document.getElementById('titulo').value = '*Alarme de Trilho Quebrado*';
+        const now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        document.getElementById('dataHora').value = now.toISOString().slice(0, 16);
+    }
+
+    if (secaoId === 'aba-info') {
+        document.querySelector('input[name="info-estagio"][value="informativo"]').checked = true;
+        trocarEstagioInfo('informativo');
+        document.getElementById('info-num-atualizacao').value = 1;
+    }
+
+    limparPreview();
 }
 
 // troca de abas
@@ -83,10 +121,8 @@ function trocarAba(aba) {
         document.getElementById('tab-info').classList.add('active');
     }
 
-    document.getElementById('saida').textContent = '';
+    limparPreview();
 }
-
-// troca de estágio dentro da aba Informativo
 function trocarEstagioInfo(estagio) {
     document.getElementById('info-bloco-informativo').style.display = 'none';
     document.getElementById('info-bloco-atualizacao').style.display = 'none';
@@ -139,9 +175,7 @@ function gerarCCM() {
     `🗺️ *Corredor:* ${corredor}`
 ].join('\n');
 
-    document.getElementById('saida').textContent = texto;
-    document.getElementById('status').textContent =
-        `Atualizado às ${new Date().toLocaleTimeString()}`;
+    mostrarPreview(texto);
 }
 
 
@@ -211,6 +245,5 @@ function gerarInformativo() {
         ].join('\n');
     }
 
-    document.getElementById('saida').textContent = texto;
-    document.getElementById('status').textContent = `Atualizado às ${new Date().toLocaleTimeString()}`;
+    mostrarPreview(texto);
 }
