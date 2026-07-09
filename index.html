@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerador - VLI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="informativo.css" rel="stylesheet">
     <script src="informativo.js" defer></script>
 </head>
@@ -11,17 +13,45 @@
 <body>
 
 <header class="header">
-    <div class="container header-content">
-        <h1>Gerador Operacional</h1>
-        <button id="theme-toggle" class="btn-theme">🌓 Alternar Tema</button>
+    <div class="container header-top">
+        <div class="header-left">
+            <span class="plate">GR · TECNOLOGIA</span>
+            <h1>Gerador Operacional</h1>
+        </div>
+        <div class="theme-switch" id="theme-toggle" role="button" aria-label="Alternar tema dia/noite">
+            <span class="ts-label ts-off">DIA</span>
+            <span class="ts-label ts-on">NOITE</span>
+            <div class="ts-thumb"></div>
+        </div>
     </div>
+    <div class="container sub-plate">CCM</div>
 </header>
+
+<!-- FAIXA DE TRILHO ANIMADA -->
+<div class="track-strip" aria-hidden="true">
+    <div class="rail-line"></div>
+    <div class="train-wrap">
+        <svg width="150" height="46" viewBox="0 0 200 60" class="train-svg">
+            <rect x="4" y="26" width="52" height="24" rx="3" fill="var(--accent)"></rect>
+            <rect x="10" y="10" width="26" height="20" rx="2" fill="var(--accent)"></rect>
+            <rect x="14" y="14" width="8" height="8" fill="var(--header)"></rect>
+            <rect x="60" y="30" width="60" height="20" rx="2" fill="var(--accent2)"></rect>
+            <rect x="126" y="30" width="60" height="20" rx="2" fill="var(--accent2)"></rect>
+            <circle cx="18" cy="52" r="7" fill="var(--rail-dark)"></circle>
+            <circle cx="44" cy="52" r="7" fill="var(--rail-dark)"></circle>
+            <circle cx="74" cy="52" r="6" fill="var(--rail-dark)"></circle>
+            <circle cx="106" cy="52" r="6" fill="var(--rail-dark)"></circle>
+            <circle cx="140" cy="52" r="6" fill="var(--rail-dark)"></circle>
+            <circle cx="172" cy="52" r="6" fill="var(--rail-dark)"></circle>
+        </svg>
+    </div>
+</div>
 
 <!-- ABAS -->
 <div class="tab-bar">
-    <button class="tab-btn active" id="tab-dtq" onclick="trocarAba('dtq')">🚧 Trilho Quebrado</button>
-    <button class="tab-btn" id="tab-ccm" onclick="trocarAba('ccm')">🚨 Alerta CCM</button>
-    <button class="tab-btn" id="tab-info" onclick="trocarAba('info')">📢 Informativo</button>
+    <button class="tab-btn active" id="tab-dtq" onclick="trocarAba('dtq')"><span class="dot"></span>Trilho Quebrado</button>
+    <button class="tab-btn" id="tab-ccm" onclick="trocarAba('ccm')"><span class="dot"></span>Alerta CCM</button>
+    <button class="tab-btn" id="tab-info" onclick="trocarAba('info')"><span class="dot"></span>Informativo</button>
 </div>
 
 <main class="grid">
@@ -69,6 +99,7 @@
         <div class="actions">
             <button onclick="gerar()" class="btn-primary">Gerar</button>
             <button onclick="copiar()" class="btn-secondary">Copiar</button>
+            <button onclick="limparFormulario('aba-dtq')" class="btn-secondary">Limpar</button>
         </div>
     </section>
 
@@ -79,7 +110,6 @@
 
         <div class="form-container">
 
-    <!-- Linha 1 -->
     <div class="row-2">
         <div>
             <label>Tipo de Equipamento</label>
@@ -96,7 +126,6 @@
         <input id="descricaoAtivo">
     </div>
 
-    <!-- Linha 2 -->
     <div class="row-2">
         <div>
             <label>Trem</label>
@@ -108,7 +137,6 @@
         </div>
     </div>
 
-    <!-- Linha 3 -->
     <div class="row-2">
         <div>
             <label>Trecho</label>
@@ -120,23 +148,17 @@
         </div>
     </div>
 
-    <!-- Linha 4 -->
     <div class="full-row">
         <label>Zona Quente</label>
         <label><input type="radio" name="zonaQuente" value="SIM"> SIM</label>
         <label><input type="radio" name="zonaQuente" value="NÃO"> NÃO</label>
     </div>
 
-    <!-- Linha 5 -->
-    
-
-    <!-- Linha 6 -->
     <div class="full-row">
         <label>Status atual</label>
         <textarea id="statusAtual"></textarea>
     </div>
 
-    
     <div class="full-row">
         <label>Corredor</label>
         <label><input type="radio" name="corredor" value="CENTRO-LESTE"> CENTRO-LESTE</label>
@@ -152,6 +174,7 @@
         <div class="actions">
             <button onclick="gerarCCM()" class="btn-primary">Gerar</button>
             <button onclick="copiar()" class="btn-secondary">Copiar</button>
+            <button onclick="limparFormulario('aba-ccm')" class="btn-secondary">Limpar</button>
         </div>
 
     </section>
@@ -174,7 +197,7 @@
                 <label><input type="radio" name="info-estagio" value="encerramento" onchange="trocarEstagioInfo('encerramento')"> Encerramento</label>
             </div>
 
-            <hr style="border: 0; border-top: 1px solid var(--border); width: 100%; margin: 5px 0;">
+            <hr class="divider">
 
             <!-- Campos: INFORMATIVO -->
             <div id="info-bloco-informativo">
@@ -214,7 +237,7 @@
                         <input id="info-num-atualizacao" type="number" min="1" value="1">
                     </div>
                     <div>
-                        <button type="button" class="btn-secondary" onclick="reiniciarNumeracaoInfo()">🔄 Reiniciar numeração (nova ocorrência)</button>
+                        <button type="button" class="btn-secondary" onclick="reiniciarNumeracaoInfo()">🔄 Reiniciar numeração</button>
                     </div>
                 </div>
                 <div class="row-2">
@@ -262,13 +285,28 @@
         <div class="actions">
             <button onclick="gerarInformativo()" class="btn-primary">Gerar</button>
             <button onclick="copiar()" class="btn-secondary">Copiar</button>
+            <button onclick="limparFormulario('aba-info')" class="btn-secondary">Limpar</button>
         </div>
     </section>
 
-    <!-- ✅ PREVIEW (Compartilhado) -->
+    <!-- ✅ PREVIEW ESTILO WHATSAPP -->
     <section class="card preview-card">
-        <div class="section-title">Pré-visualização (WhatsApp)</div>
-        <div id="saida" class="preview-body"></div>
+        <div class="wa-mock">
+            <div class="wa-header">
+                <div class="wa-avatar">GR</div>
+                <div class="wa-header-text">
+                    <div class="wa-name">Pré-visualização</div>
+                    <div class="wa-sub">mensagem gerada automaticamente</div>
+                </div>
+            </div>
+            <div class="wa-body">
+                <div class="wa-empty" id="wa-empty">Preencha o formulário e clique em Gerar para ver a prévia da mensagem.</div>
+                <div class="wa-bubble" id="wa-bubble" style="display:none;">
+                    <div id="saida" class="wa-text"></div>
+                    <div class="wa-meta"><span id="wa-time"></span><span class="wa-check">✓✓</span></div>
+                </div>
+            </div>
+        </div>
         <div id="status" class="status-msg"></div>
     </section>
 
