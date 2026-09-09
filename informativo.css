@@ -197,11 +197,19 @@ body.light-mode .ts-thumb { left: 3px; }
     pointer-events: none;
     animation: trainMove 16s linear infinite;
 }
-.train-svg rect, .train-svg circle { transition: fill var(--transition); }
+
+.train-svg {
+    transform: scaleX(-1);
+}
 
 @keyframes trainMove {
-    from { left: -22%; }
-    to   { left: 122%; }
+    from {
+        left: -22%;
+    }
+
+    to {
+        left: 122%;
+    }
 }
 
 /* =============================================
